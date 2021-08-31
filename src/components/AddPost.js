@@ -62,9 +62,14 @@ class AddPost extends Component {
                         aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center">Create Post</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                                 <div className="modal-body">
                                     <div className='post_form center' id="post_form_id">
-                                        {/* <!-- <i id='close_form_id' className='fa fa-remove top_right'></i> --> */}
                                         <div className='text_container'>
                                             <div className='flex-fill'>
                                                 <i className="fa fa-user-circle-o fa-3x" aria-hidden="true"></i>

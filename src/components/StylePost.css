@@ -153,6 +153,11 @@ input.post_ip{
 .post_input{
     background:#ffffff
 }
+.modal-title{
+    text-align: center;
+    font-weight: bold;
+}
+
 
 @media screen and (max-width: 940px) {
     .container {
