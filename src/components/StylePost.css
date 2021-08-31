@@ -3,7 +3,7 @@
     font-family: 'Ubuntu', sans-serif;
 }
 body{
-    /* background: #0000007a; */
+   
     background:	#f7f7f7
 }
 button:focus{
@@ -13,14 +13,7 @@ button:focus{
     padding: 2rem 10rem;
     background:#f7f7f7
 }
-/* .post_form{
-    position: absolute;
-    background: white;
-    top: 20%;
-    min-width: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} */
+
 .noneDisplay{
     display: none;
 }
@@ -37,7 +30,7 @@ button:focus{
 }
 .text_container{
     position: relative;
-    /* display: flex; */
+    
 }
 .fa-user-circle-o{
     margin: 0.5rem;
@@ -61,7 +54,6 @@ input.post_ip{
     padding: 0.3rem 3rem;
     border-radius: 2rem;
     float: left;
-    /* margin: 0.9rem; */
     background: linear-gradient(to right, rgb(182, 114, 184), rgb(97, 13, 97));
     font-weight: bold;
     cursor: pointer;
@@ -109,7 +101,6 @@ input.post_ip{
 .gif_search input{
     border: none;
     width: 100%;
-    /* min-height: 4rem; */
     background: #fafafa;
     padding: 0.5rem 1rem;
 }
