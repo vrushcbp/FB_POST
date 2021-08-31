@@ -1,100 +1,132 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import './StylePost.css'
+import React, { Component } from 'react'
+import GifComp from './GifComp'
 class AddPost extends Component {
+    constructor(props) {
+        super(props)
 
+        this.myref = React.createRef()
+    }
 
     state = {
+        isGIFOpen: false,
         content: '',
         postArray: [],
         gifData: [],
-        inputSearch: []
+        inputSearch: [],
+        selectedGIF: null
     }
 
+
+    onSubmitHandler = (event) => {
+        event.preventDefault();
+
+        var { content, postArray, selectedGIF } = this.state
+        console.log('if', content)
+        if (content == "" && selectedGIF == null) {
+            alert('Please write something...')
+        }
+        else {
+            postArray.push({
+                msg: content,
+                gif: selectedGIF,
+                date: new Date().toDateString()
+            })
+            this.setState({
+                content: '',
+                selectedGIF: null
+            })
+        }
+    }
     handleInput = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
 
         })
-
     }
 
-    onSubmitHandler = (event) => {
-        event.preventDefault();
-        // this.props.addPost(this.state)
-        let { content, postArray } = this.state
-        postArray.push(content)
+    handleCallback = (data) => {
         this.setState({
-            content: ''
+            selectedGIF: data
+
         })
+        console.log('callback', this.state.selectedGIF, this.state.data)
     }
 
-    handleGif = () => {
-        // axios.get('')
-        var giphy = require('giphy-api')('CGKhObFLZ041pFZzmP0b5f7718GAcf5f');
-        console.log('i/p',this.state.inputSearch)
-        var data = [];
-        // giphy.search(this.state.inputSearch)
-        // giphy.search('pokemon')
-        giphy.search({
-            q: this.state.inputSearch,
-            rating: 'g',
-            limit:10
-        },
-            (err,res) => {
-                console.log(res.data)
-                data = res.data
-                this.setState({
-                    gifData:res.data
-                })
-        })
-            // .catch(err => {
-            //     console.log(err)
-            // })
-    }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.onSubmitHandler}>
-                    <div className="container">
-
-                        <textarea id="txtArea" name="content" type="text" rows="30" cols="100" placeholder="Write something here...."
-                            onChange={this.handleInput} value={this.state.content} />
-
-                        <button type="submit" >Post</button>
-
+                <div className="container">
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModal"
+                        aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-body">
+                                    <div className='post_form center' id="post_form_id">
+                                        {/* <!-- <i id='close_form_id' className='fa fa-remove top_right'></i> --> */}
+                                        <div className='text_container'>
+                                            <div className='flex-fill'>
+                                                <i className="fa fa-user-circle-o fa-3x" aria-hidden="true"></i>
+                                                <div>
+                                                    <input className='post_ip' id='content' type="text" name="content"
+                                                        placeholder="Write something here..." autoComplete="off" value={this.state.content} onChange={this.handleInput} ref={this.myref} />
+                                                    <div className="gif_input">
+                                                        <div id='selectedGIF'>
+                                                            {this.state.selectedGIF ? <img src={this.state.selectedGIF
+                                                            } /> : ''}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <GifComp handleCallback={this.handleCallback} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal"
+                                        onClick={this.modalHandler = () => {
+                                            this.setState({
+                                                content: '',
+                                                selectedGIF: null
+                                            })
+                                        }}>Close</button>
+                                    <button className='float-right btn btn-primary' onClick={this.onSubmitHandler} data-dismiss="modal">
+                                        Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-                <div>
-                    {
-                        this.state.postArray.map(dt => {
-                            return <div>{dt}</div>
-                        })
-                    }
+                    <div className='post_update'>
+                        <div className='flex-fill'>
+                            <i className="fa fa-user-circle-o fa-3x" aria-hidden="true"></i>
+                            <div className='post_input' data-toggle="modal" data-target="#exampleModal">What's on your mind, Vrushabh?
+                            </div>
+                            <div className="gif_input">
+                            </div>
+                        </div>
+                        <div className="post_list" id='postsListId'>
+                            {
+                                this.state.postArray.map((dt, i) => {
+                                    return (<div className="list" key={i}>
+                                        <i className="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+                                        <div className='list_text'>
+                                            {dt.msg} <br />
+                                            <img src={dt.gif} /><br />
+                                            <div className="current-date">{dt.date}</div>
+                                        </div>
+
+                                    </div>)
+                                })
+                            }
+                        </div>
+                    </div>
 
                 </div>
-
-                {/* GIF */}
-                <div>
-                    <input type="text" name="inputSearch" value={this.state.inputSearch} onChange={this.handleInput}
-                        placeholder="Search"/>
-
-
-                    <button onClick={this.handleGif} >View GIF</button>
-                    <div>
-                        {
-                            this.state.gifData.map((img, index) => {
-                                return <img key={index} src={img.images.fixed_width_small.url} />
-                            })
-                        }
-
-                    </div>
-                </div>
-
             </div>
         )
-
     }
-
 }
+
 export default AddPost

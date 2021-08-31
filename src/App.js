@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
-import Post from './components/Post'
+import AddPost from './components/AddPost'
+
 function App() {
   return (
     <div className="App">
-      <Post/>
+      <AddPost/>
     </div>
   );
 }
